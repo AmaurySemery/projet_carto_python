@@ -1,0 +1,24 @@
+import requests
+
+owmapik = "7f9054c4edb12a97316c2da4d6fed6c9"
+owm_baseurl = "http://api.openweathermap.org/data/2.5/weather?appid=7f9054c4edb12a97316c2da4d6fed6c9&units=metric"
+
+def get_weather(c):
+    lat = c["ltt"]
+    long = c["lng"]
+    own_url = owm_baseurl + "&lat=" + lat + "&lon=" + long
+    own_data = requests.get(own_url).json()
+    print(own_data)
+
+def get_locations():
+    geocode=[]
+    lonlat = open("/home/popschool/Downloads/lonlatonly.txt","r")
+    for line in lonlat:
+        lat,lon=line.split(",")
+        coord={"lng":lon.strip(),"ltt":lat}
+        geocode.append(coord)
+    return(geocode)
+    
+coords = get_locations()
+print(coords[5])
+get_weather(coords[0])

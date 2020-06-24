@@ -1,0 +1,24 @@
+import requests
+import smtplib
+import urllib
+import geopy
+import json
+def get_location():
+    geocode={}
+    lonlat=open('C:/Users/user/Desktop/lonlatonly.txt', 'r')
+    for line in lonlat:
+        lon, lat=line.split(',')
+        geocode(lon.strip()
+    return geocode
+        
+def get_weather(geocode):
+    api='mettre une autre clef pour API'
+    for x, y in geocode.items():
+        url='http://api.openweathermap.org/data/2.5/weather?lat='+x+'&lon='+y+'&units=metrics&appid='+api+''.format(x,y)
+        weather_r=requests.get(url)
+        weather_j=weather_r.json()
+        print(weather_j)
+geocode=get_location()
+get_location()
+get_weather(geocode)
+print(geocode)
