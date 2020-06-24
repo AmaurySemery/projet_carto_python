@@ -55,12 +55,14 @@ def get_weather(c):
 
 def get_map(locations):
     area = get_area(locations)
-    map = smopy.Map( (area['lat_min'],area['lon_min'],area['lat_max'],area['lon_max']) , z=15)
+    map = smopy.Map( (area['lat_min'],area['lon_min'],area['lat_max'],area['lon_max']) , z=6) 
+    # z = zoom
     # create a figure with the map :
     ax = map.show_mpl(figsize=(8,6))
     for location in locations :
         x,y = map.to_pixels(float(location['lat']),float(location['lon']))
-        ax.plot(x,y,'or',ms=10,mew=2)
+        ax.plot(x,y,'ob',ms=2,mew=5)
+        # ms = épaisseur & mew = diamètre des points & or = couleur
     plt.show()
     return True
     

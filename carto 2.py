@@ -3,10 +3,10 @@ import config
 
 baseurl='http://api.openweathermap.org/data/2.5/weather?appid='+config.apikey + "&units=metric"
 
-def get_locations(lonlatonly):
+def get_locations(filename):
     # Same as 01_carto.py
     geocode=[] # geocode = tableau des listes de coord
-    lonlat=open(lonlatonly, 'r') # ouverture du fichier
+    lonlat=open(filename, 'r') # ouverture du fichier
     for line in lonlat:
         lon, lat=line.split(',') # on découpe la ligne à la ","
         coord={} # coord est une liste vide
@@ -47,6 +47,7 @@ def get_weather(c):
     # Same as 01_carto.py
     url = baseurl + "&lon="+c["lon"] + "&lat="+c['lat']
     weather=requests.get(url).json()
+    print(weather)
     c["temp"]=weather['main']['temp']
     return c
 
