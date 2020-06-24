@@ -3,7 +3,7 @@ import requests
 
 import config as conf
 
-baseurl="http://api.openweathermap.org/data/2.5/weather?units=metrics&appid="+conf.apikey
+baseurl="http://api.openweathermap.org/data/2.5/weather?units=metric&appid="+conf.apikey
 
 def get_locations():
     geocode=[] # geocode = tableau des listes de coord
