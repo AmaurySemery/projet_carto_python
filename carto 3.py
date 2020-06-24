@@ -53,9 +53,14 @@ def get_weather(c):
     c["temp"]=weather['main']['temp']
     return c
 
-def get_map(coords):
-    map = smopy.Map( (coords['lat_min'],coords['lon_min'],coords['lat_max'],coords['lon_max']) , z=8)
-    ax = map.show_mpl(figsize=(8,8))
+def get_map(locations):
+    area = get_area(locations)
+    map = smopy.Map( (area['lat_min'],area['lon_min'],area['lat_max'],area['lon_max']) , z=15)
+    # create a figure with the map :
+    ax = map.show_mpl(figsize=(8,6))
+    for location in locations :
+        x,y = map.to_pixels(float(location['lat']),float(location['lon']))
+        ax.plot(x,y,'or',ms=10,mew=2)
     plt.show()
     return True
     
@@ -76,17 +81,12 @@ def main():
         sep = "LIGNE %d"  % nbligne
         print_dict(location,sep)
         
-        
-    #4 - get area boundary  :
-    area = get_area(locations)
-    print_dict(area,"AREA")
+
 
     #4 - get the map (according to boundaries)
-    map = get_map(area)
+    map = get_map(locations)
     
     # NOW, we have all the data we need, no more API Request !
-
-
 
 
 if __name__ == "__main__":
