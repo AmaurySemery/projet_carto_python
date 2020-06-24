@@ -1,18 +1,13 @@
 # bibliotheque pour executer des requetes web :
 import requests
-'''
-fichier de configuration (config.py) enregistré à côté de ce fichier. il contient l'API etc.
-Plus pratique pour se refiler du code... mais tout le monde doit utiliser la même convention
-​
-apikey=''
-lang='fr'
-name='Thomas HOCEDEZ'
-'''
+
 import config as conf
-baseurl='http://api.openweathermap.org/data/2.5/weather?lat='+x+'&lon='+y+'&units=metrics&appid='+api+''.format(x,y)
-​def get_locations():
+
+baseurl="http://api.openweathermap.org/data/2.5/weather?units=metrics&appid="+conf.apikey
+
+def get_locations():
     geocode=[] # geocode = tableau des listes de coord
-    lonlat=open('lonlat.txt', 'r') # ouverture du fichier
+    lonlat=open('lonlatonly.txt', 'r') # ouverture du fichier
     for line in lonlat:
         lon, lat=line.split(',') # on découpe la ligne à la ","
         coord={} # coord est une liste vide
@@ -20,7 +15,7 @@ baseurl='http://api.openweathermap.org/data/2.5/weather?lat='+x+'&lon='+y+'&unit
         coord["lon"]=lat.strip()#on ajoute un objet "lat"
         geocode.append(coord) # on ajoute la coord au tableau (à la fin)
     return geocode #on renvoie notre joli tableau
-​
+    
 def display_location(l,titre):
     '''
     petite fonction qui affiche proprement une liste de type 'coord'
@@ -37,7 +32,7 @@ def display_location(l,titre):
     print(titre)
     for item in l:
         print(item, " = ", l[item])
-​
+        
 def get_weather(c):
     '''
     on reçoit une liste au format :
@@ -52,13 +47,13 @@ def get_weather(c):
         {'lon':xxxx, 'lat':yyyy, 'temp':zzzz}
     On termine en renvoyant tout notre 'c' (qui est notre liste de base, augmentée de la température)
     '''
-​
     url = baseurl + "&lon="+c["lon"] + "&lat="+c['lat']
+    print(url)
     weather=requests.get(url).json()
+    print(weather)
     c["temp"]=weather['main']['temp']
     return c
-​
-​
+    
 def main():
     '''
     on génère notre tableau de coordonnées à partir du fichier :
@@ -77,7 +72,7 @@ def main():
         nbligne=nbligne+1
         sep = "=== LIGNE %d ==="  % nbligne
         display_location(location,sep)
-​
+        
 '''
 petite convention pour faire un code CLEAN :
 notre programme principal, est maintenant une fonction : main()
